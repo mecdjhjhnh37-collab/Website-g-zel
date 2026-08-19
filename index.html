@@ -21,7 +21,6 @@ margin:0;
 padding:0;
 }
 
-
 body {
 font-family:Arial,sans-serif;
 min-height:100vh;
@@ -201,285 +200,359 @@ text-align:center;
 margin-bottom:45px;
 
 }
+    .welcome {
+    font-size: 20px;
+    color: #a8bdb6;
+  }
+
+  .section-title {
+    font-size: 22px;
+    margin-bottom: 18px;
+    color: #d9e8e3;
+  }
+
   .service {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    padding: 22px;
+    margin-bottom: 18px;
+    text-decoration: none;
+    color: white;
+    background: linear-gradient(
+      135deg,
+      rgba(0,85,58,.65),
+      rgba(2,31,24,.85)
+    );
+    border: 1px solid rgba(0,255,145,.18);
+    border-radius: 26px;
+    transition: .2s;
+    box-shadow: 0 12px 35px rgba(0,0,0,.25);
+  }
 
-display:flex;
+  .service:active {
+    transform: scale(.98);
+  }
 
-align-items:center;
+  .service-icon {
+    width: 70px;
+    height: 70px;
+    flex-shrink: 0;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    background: rgba(0,255,145,.12);
+    border: 1px solid rgba(0,255,145,.18);
+  }
 
-gap:18px;
+  .service-info {
+    flex: 1;
+  }
 
-width:100%;
+  .service-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
 
-padding:22px;
+  .service-description {
+    color: #9db1aa;
+    font-size: 15px;
+    line-height: 1.6;
+  }
 
-margin-bottom:18px;
+  .arrow {
+    font-size: 28px;
+    color: #00e889;
+  }
 
-text-decoration:none;
-
-color:white;
-
-background:linear-gradient(
-135deg,
-rgba(0,85,58,.65),
-rgba(2,31,24,.85)
-);
-
-border:1px solid rgba(0,255,145,.18);
-
-border-radius:26px;
-
-box-shadow:0 12px 35px rgba(0,0,0,.25);
-
-}
-
-
-.service-icon {
-
-width:70px;
-
-height:70px;
-
-border-radius:22px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:38px;
-
-background:rgba(0,255,145,.12);
-
-}
-
-
-.service-info {
-
-flex:1;
-
-}
-
-
-.service-name {
-
-font-size:22px;
-
-font-weight:bold;
-
-margin-bottom:8px;
-
-}
-
-
-.service-description {
-
-color:#9db1aa;
-
-font-size:15px;
-
-line-height:1.6;
-
-}
-
-
-.arrow {
-
-font-size:28px;
-
-color:#00e889;
-
-}
-
-
-.footer {
-
-text-align:center;
-
-margin-top:45px;
-
-color:#62756e;
-
-font-size:13px;
-
-}
+  .footer {
+    text-align: center;
+    margin-top: 45px;
+    color: #62756e;
+    font-size: 13px;
+  }
 
 </style>
-
 </head>
-
 
 <body>
 
-
 <div id="loadingPage" class="loading">
-
-<div class="loading-logo">
-🛠️
+  <div class="loading-logo">🛠️</div>
+  <div class="spinner"></div>
 </div>
-
-<div class="spinner"></div>
-
-</div>
-
 
 
 <div id="loginPage" class="login-page">
 
-<div class="login-card">
+  <div class="login-card">
 
-<div class="logo">
-🛠️
-</div>
+    <div class="logo">🛠️</div>
 
-<h1>
-Mecd Tools
-</h1>
+    <h1>Mecd Tools</h1>
 
-<p class="login-text">
+    <p class="login-text">
+      أهلاً بك 👋<br>
+      سجّل الدخول للمتابعة إلى خدمات Mecd Tools
+    </p>
 
-أهلاً بك 👋<br>
+    <button id="loginBtn">
+      🔵 تسجيل الدخول بواسطة Google
+    </button>
 
-سجّل الدخول للمتابعة إلى خدمات Mecd Tools
+    <div id="errorMessage" class="error"></div>
 
-</p>
-
-
-<button id="loginBtn">
-
-🔵 تسجيل الدخول بواسطة Google
-
-</button>
-
+  </div>
 
 </div>
-
-</div>
-
 
 
 <main id="mainPage" class="container">
 
+  <header class="header">
 
-<header class="header">
+    <div class="logo">🛠️</div>
 
+    <h1>Mecd Tools</h1>
 
-<div class="logo">
-🛠️
-</div>
+    <p class="welcome">
+      أهلاً بك في أدوات Mecd
+    </p>
 
-
-<h1>
-Mecd Tools
-</h1>
-
-
-<p class="welcome">
-أهلاً بك في أدوات Mecd
-</p>
+  </header>
 
 
-</header>
+  <section>
+
+    <div class="section-title">
+      🧰 الخدمات
+    </div>
 
 
+    <!-- Camera Connect -->
 
-<section>
+    <a
+      class="service"
+      href="https://mecdjhjhnh37-collab.github.io/walkie-talkie-telsiz/"
+    >
 
+      <div class="service-icon">
+        📷
+      </div>
 
-<div class="section-title">
+      <div class="service-info">
 
-🧰 الخدمات
+        <div class="service-name">
+          Camera Connect
+        </div>
 
-</div>
+        <div class="service-description">
+          نظام مراقبة ذكي — استخدم هاتفًا ككاميرا واتصل بجهاز المراقبة.
+        </div>
 
+      </div>
 
+      <div class="arrow">
+        ←
+      </div>
 
-<a class="service"
-href="https://mecdjhjhnh37-collab.github.io/walkie-talkie-telsiz/">
-
-
-<div class="service-icon">
-📷
-</div>
-
-
-<div class="service-info">
-
-
-<div class="service-name">
-Camera Connect
-</div>
-
-
-<div class="service-description">
-نظام مراقبة ذكي — استخدم هاتفًا ككاميرا واتصل بجهاز المراقبة.
-</div>
+    </a>
 
 
-</div>
+    <!-- Mecd Chat -->
+
+    <a
+      class="service"
+      href="chat.html"
+    >
+
+      <div class="service-icon">
+        💬
+      </div>
+
+      <div class="service-info">
+
+        <div class="service-name">
+          Mecd Chat
+        </div>
+
+        <div class="service-description">
+          دردشة وغرف خاصة بين المستخدمين.
+        </div>
+
+      </div>
+
+      <div class="arrow">
+        ←
+      </div>
+
+    </a>
+
+  </section>
 
 
-<div class="arrow">
-←
-</div>
-
-
-</a>
-
-
-
-
-<a class="service"
-href="https://رابط-mecd-chat-هنا">
-
-
-<div class="service-icon">
-💬
-</div>
-
-
-<div class="service-info">
-
-
-<div class="service-name">
-Mecd Chat
-</div>
-
-
-<div class="service-description">
-دردشة وغرف خاصة بين المستخدمين.
-</div>
-
-
-</div>
-
-
-<div class="arrow">
-←
-</div>
-
-
-</a>
-
-
-</section>
-
-
-
-<footer class="footer">
-
-Mecd Tools © 2026
-
-</footer>
-
+  <footer class="footer">
+    Mecd Tools © 2026
+  </footer>
 
 </main>
 
 
 <script type="module">
 
-// Firebase code يبقى نفسه الموجود عندك
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+  setPersistence,
+  browserLocalPersistence
+}
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyA8ZA5fcy1Tl3hZ7_5n91xVOw06syHPGyI",
+
+  authDomain: "mecd-tools.firebaseapp.com",
+
+  projectId: "mecd-tools",
+
+  storageBucket: "mecd-tools.firebasestorage.app",
+
+  messagingSenderId: "643005547408",
+
+  appId: "1:643005547408:web:b1719060ec340dd0e0a915",
+
+  measurementId: "G-0VKYR3TQV2"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const provider = new GoogleAuthProvider();
+
+
+const loadingPage =
+  document.getElementById("loadingPage");
+
+const loginPage =
+  document.getElementById("loginPage");
+
+const mainPage =
+  document.getElementById("mainPage");
+
+const loginBtn =
+  document.getElementById("loginBtn");
+
+const errorMessage =
+  document.getElementById("errorMessage");
+
+
+await setPersistence(
+  auth,
+  browserLocalPersistence
+);
+
+
+onAuthStateChanged(auth, (user) => {
+
+  loadingPage.style.display = "none";
+
+  if (user) {
+
+    loginPage.style.display = "none";
+
+    mainPage.style.display = "block";
+
+  } else {
+
+    mainPage.style.display = "none";
+
+    loginPage.style.display = "flex";
+
+  }
+
+});
+
+
+loginBtn.addEventListener("click", async () => {
+
+  loginBtn.disabled = true;
+
+  loginBtn.textContent =
+    "جاري تسجيل الدخول...";
+
+  errorMessage.style.display = "none";
+
+
+  try {
+
+    await signInWithPopup(
+      auth,
+      provider
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    errorMessage.textContent =
+      "حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.";
+
+    errorMessage.style.display = "block";
+
+    loginBtn.disabled = false;
+
+    loginBtn.textContent =
+      "🔵 تسجيل الدخول بواسطة Google";
+
+  }
+
+});
+
+</script>
+
+
+<script>
+
+if ("serviceWorker" in navigator) {
+
+  window.addEventListener("load", () => {
+
+    navigator.serviceWorker.register("./sw.js")
+
+      .then(() => {
+
+        console.log(
+          "Mecd Tools: Service Worker registered"
+        );
+
+      })
+
+      .catch(error => {
+
+        console.error(
+          "Service Worker error:",
+          error
+        );
+
+      });
+
+  });
+
+}
 
 </script>
 
