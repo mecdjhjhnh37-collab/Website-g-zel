@@ -2,8 +2,44 @@
 <html lang="ar" dir="rtl">
 
   <script type="module">
-  // Firebase code will be added here
-</script>
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { 
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA8ZA5fcy1Tl3hZ7_5n91xVOw06syHPGyI",
+    authDomain: "mecd-tools.firebaseapp.com",
+    projectId: "mecd-tools",
+    storageBucket: "mecd-tools.firebasestorage.app",
+    messagingSenderId: "643005547408",
+    appId: "1:643005547408:web:b1719060ec340dd0e0a915",
+    measurementId: "G-0VKYR3TQV2"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  const loginBtn = document.getElementById("loginBtn");
+  const loginPage = document.getElementById("loginPage");
+  const mainPage = document.getElementById("mainPage");
+
+  loginBtn.onclick = () => {
+    signInWithPopup(auth, provider);
+  };
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      loginPage.style.display = "none";
+      mainPage.style.display = "block";
+    }
+  });
+  </script>
+  
   
 <head>
   <meta charset="UTF-8">
@@ -142,7 +178,7 @@
 
 <body>
 
-  <main class="container">
+  <main id="mainPage" class="container" style="display:none;">
 
     <header class="header">
 
@@ -205,5 +241,13 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+  <div id="loginPage" style="text-align:center; padding:50px;">
+  <h1>Mecd Tools</h1>
+  <p>تسجيل الدخول للمتابعة</p>
+
+  <button id="loginBtn">
+    تسجيل الدخول بواسطة Google
+  </button>
+  </div>
 </body>
 </html>
