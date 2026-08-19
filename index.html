@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#061712">
   <title>Mecd Tools</title>
 
   <meta name="theme-color" content="#061712">
@@ -190,6 +191,14 @@
     </footer>
 
   </main>
-
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("Mecd Tools: Service Worker registered"))
+      .catch(error => console.error("Service Worker error:", error));
+  });
+}
+</script>
 </body>
 </html>
