@@ -500,23 +500,22 @@ loginBtn.addEventListener("click", async () => {
   try {
 
     const result = await signInWithPopup(
-      auth,
-      provider
-    );
+  auth,
+  provider
+);
 
 
-    const user = result.user;
+const user = result.user;
 
 
-    localStorage.setItem("mecdUser", JSON.stringify({
-
-      name: user.displayName,
-
-      photo: user.photoURL,
-
-      email: user.email
-
-    }));
+localStorage.setItem(
+  "mecdUser",
+  JSON.stringify({
+    name: user.displayName,
+    photo: user.photoURL,
+    email: user.email
+  })
+);
 
 
   } catch (error) {
