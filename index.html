@@ -3,483 +3,901 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#061712">
+  <link rel="manifest" href="manifest.json">
 
-<title>Mecd Tools</title>
+  <meta name="theme-color" content="#061712">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mecd Tools">
 
-<meta name="description" content="Mecd Tools - أدوات وخدمات مجانية">
+  <meta
+    name="description"
+    content="Mecd Tools - مجموعة أدوات وخدمات مجانية وسهلة الاستخدام."
+  >
 
-<style>
+  <title>Mecd Tools</title>
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
-body {
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-  color: white;
+  <style>
 
-  background:
-    radial-gradient(circle at 50% 0%, #064d37 0%, transparent 38%),
-    linear-gradient(180deg, #03110d, #020707);
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
 
-/* =========================
-   Loading
-========================= */
+    body {
+      font-family: Arial, Tahoma, sans-serif;
 
-.loading {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 18px;
-}
+      min-height: 100vh;
 
-.loading-logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 25px;
+      color: white;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          #064d37 0%,
+          transparent 38%
+        ),
+        linear-gradient(
+          180deg,
+          #03110d,
+          #020707
+        );
 
-  font-size: 42px;
+      overflow-x: hidden;
+    }
 
-  background: rgba(0,255,145,.12);
-  border: 1px solid rgba(0,255,145,.25);
-}
 
-.spinner {
-  width: 28px;
-  height: 28px;
+    /* =========================
+       Loading
+    ========================= */
 
-  border: 3px solid rgba(255,255,255,.15);
-  border-top-color: #00e889;
+    .loading {
 
-  border-radius: 50%;
+      min-height: 100vh;
 
-  animation: spin .8s linear infinite;
-}
+      display: flex;
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
+      align-items: center;
+      justify-content: center;
 
+      flex-direction: column;
 
-/* =========================
-   Login
-========================= */
+      gap: 18px;
+    }
 
-.login-page {
-  min-height: 100vh;
 
-  display: none;
+    .loading-logo {
 
-  align-items: center;
-  justify-content: center;
+      width: 80px;
+      height: 80px;
 
-  padding: 25px;
-}
+      border-radius: 25px;
 
-.login-card {
-  width: min(100%, 420px);
+      display: flex;
 
-  padding: 38px 25px;
+      align-items: center;
+      justify-content: center;
 
-  text-align: center;
+      font-size: 42px;
 
-  border-radius: 30px;
+      background:
+        rgba(0,255,145,.12);
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(0,85,58,.65),
-      rgba(2,31,24,.9)
-    );
+      border:
+        1px solid
+        rgba(0,255,145,.25);
+    }
 
-  border: 1px solid rgba(0,255,145,.2);
 
-  box-shadow: 0 20px 60px rgba(0,0,0,.35);
-}
+    .spinner {
 
-.logo {
-  width: 90px;
-  height: 90px;
+      width: 28px;
+      height: 28px;
 
-  margin: 0 auto 22px;
+      border:
+        3px solid
+        rgba(255,255,255,.15);
 
-  border-radius: 28px;
+      border-top-color:
+        #00e889;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+      border-radius: 50%;
 
-  font-size: 48px;
+      animation:
+        spin .8s linear infinite;
+    }
 
-  background: rgba(0,255,145,.12);
 
-  border: 1px solid rgba(0,255,145,.25);
-}
+    @keyframes spin {
 
-h1 {
-  font-size: 36px;
-  margin-bottom: 12px;
-}
+      to {
+        transform: rotate(360deg);
+      }
 
-.login-text {
-  color: #a8bdb6;
+    }
 
-  font-size: 17px;
 
-  line-height: 1.7;
+    /* =========================
+       Login
+    ========================= */
 
-  margin-bottom: 25px;
-}
+    .login-page {
 
-#loginBtn {
-  width: 100%;
+      min-height: 100vh;
 
-  border: none;
+      display: none;
 
-  border-radius: 18px;
+      align-items: center;
+      justify-content: center;
 
-  padding: 16px;
+      padding: 25px;
+    }
 
-  font-size: 17px;
 
-  font-weight: bold;
+    .login-card {
 
-  cursor: pointer;
+      width: min(100%, 420px);
 
-  background: #00e889;
+      padding: 38px 25px;
 
-  color: #00150e;
-}
+      text-align: center;
 
-#loginBtn:active {
-  transform: scale(.97);
-}
+      border-radius: 30px;
 
-#loginBtn:disabled {
-  opacity: .6;
-}
+      background:
+        linear-gradient(
+          145deg,
+          rgba(0,85,58,.65),
+          rgba(2,31,24,.9)
+        );
 
-.error {
-  color: #ff8f8f;
+      border:
+        1px solid
+        rgba(0,255,145,.2);
 
-  font-size: 14px;
+      box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.35);
+    }
 
-  margin-top: 15px;
 
-  display: none;
-}
+    .logo {
 
+      width: 90px;
+      height: 90px;
 
-/* =========================
-   Main
-========================= */
+      margin: 0 auto 22px;
 
-.container {
-  display: none;
+      border-radius: 28px;
 
-  width: min(92%, 700px);
+      display: flex;
 
-  margin: auto;
+      align-items: center;
+      justify-content: center;
 
-  padding: 25px 0 40px;
-}
+      font-size: 48px;
 
+      background:
+        rgba(0,255,145,.12);
 
-/* =========================
-   Account
-========================= */
+      border:
+        1px solid
+        rgba(0,255,145,.25);
+    }
 
-.account-area {
-  position: relative;
 
-  display: flex;
+    h1 {
 
-  justify-content: flex-start;
+      font-size: 36px;
 
-  margin-bottom: 25px;
-}
+      margin-bottom: 12px;
+    }
 
-.account-button {
-  display: flex;
 
-  align-items: center;
+    .login-text {
 
-  gap: 10px;
+      color: #a8bdb6;
 
-  padding: 7px 10px;
+      font-size: 17px;
 
-  border-radius: 18px;
+      line-height: 1.7;
 
-  border: 1px solid rgba(0,255,145,.2);
+      margin-bottom: 25px;
+    }
 
-  background: rgba(0,60,40,.55);
 
-  color: white;
+    #loginBtn {
 
-  cursor: pointer;
-}
+      width: 100%;
 
-.account-button:active {
-  transform: scale(.97);
-}
+      border: none;
 
-.account-photo {
-  width: 42px;
-  height: 42px;
+      border-radius: 18px;
 
-  border-radius: 50%;
+      padding: 16px;
 
-  object-fit: cover;
+      font-size: 17px;
 
-  border: 2px solid #00e889;
-}
+      font-weight: bold;
 
-.account-name {
-  max-width: 150px;
+      cursor: pointer;
 
-  overflow: hidden;
+      background:
+        #00e889;
 
-  white-space: nowrap;
+      color:
+        #00150e;
 
-  text-overflow: ellipsis;
+      transition:
+        .2s;
+    }
 
-  font-size: 15px;
 
-  font-weight: bold;
-}
+    #loginBtn:active {
 
-.account-arrow {
-  color: #00e889;
+      transform:
+        scale(.97);
+    }
 
-  font-size: 14px;
-}
 
+    #loginBtn:disabled {
 
-/* القائمة */
+      opacity: .6;
 
-.account-menu {
-  position: absolute;
+      cursor:
+        not-allowed;
+    }
 
-  top: 58px;
 
-  right: 0;
+    .error {
 
-  width: 210px;
+      color:
+        #ff8f8f;
 
-  padding: 10px;
+      font-size:
+        14px;
 
-  border-radius: 18px;
+      line-height:
+        1.6;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(0,60,40,.98),
-      rgba(2,25,20,.98)
-    );
+      margin-top:
+        15px;
 
-  border: 1px solid rgba(0,255,145,.2);
+      display:
+        none;
+    }
 
-  box-shadow: 0 15px 40px rgba(0,0,0,.4);
 
-  display: none;
+    /* =========================
+       Main
+    ========================= */
 
-  z-index: 100;
-}
+    .container {
 
-.account-menu.show {
-  display: block;
-}
+      display:
+        none;
 
-.account-email {
-  padding: 10px;
+      width:
+        min(92%, 700px);
 
-  color: #9db1aa;
+      margin:
+        auto;
 
-  font-size: 13px;
+      padding:
+        25px 0 40px;
+    }
 
-  overflow: hidden;
 
-  text-overflow: ellipsis;
+    /* =========================
+       Account
+    ========================= */
 
-  white-space: nowrap;
+    .account-area {
 
-  border-bottom: 1px solid rgba(255,255,255,.08);
+      position:
+        relative;
 
-  margin-bottom: 8px;
-}
+      display:
+        flex;
 
-.logout-button {
-  width: 100%;
+      justify-content:
+        flex-start;
 
-  padding: 12px;
+      margin-bottom:
+        25px;
+    }
 
-  border: none;
 
-  border-radius: 12px;
+    .account-button {
 
-  background: rgba(255,70,70,.12);
+      display:
+        flex;
 
-  color: #ff9b9b;
+      align-items:
+        center;
 
-  font-size: 15px;
+      gap:
+        10px;
 
-  font-weight: bold;
+      padding:
+        7px 10px;
 
-  cursor: pointer;
-}
+      border-radius:
+        18px;
 
-.logout-button:active {
-  transform: scale(.97);
-}
+      border:
+        1px solid
+        rgba(0,255,145,.2);
 
+      background:
+        rgba(0,60,40,.55);
 
-/* =========================
-   Header
-========================= */
+      color:
+        white;
 
-.header {
-  text-align: center;
+      cursor:
+        pointer;
+    }
 
-  margin-bottom: 45px;
-}
 
-.welcome {
-  font-size: 20px;
+    .account-button:active {
 
-  color: #a8bdb6;
-}
+      transform:
+        scale(.97);
+    }
 
-.section-title {
-  font-size: 22px;
 
-  margin-bottom: 18px;
+    .account-photo {
 
-  color: #d9e8e3;
-}
+      width:
+        42px;
 
+      height:
+        42px;
 
-/* =========================
-   Services
-========================= */
+      border-radius:
+        50%;
 
-.service {
-  display: flex;
+      object-fit:
+        cover;
 
-  align-items: center;
+      border:
+        2px solid
+        #00e889;
+    }
 
-  gap: 18px;
 
-  width: 100%;
+    .account-name {
 
-  padding: 22px;
+      max-width:
+        150px;
 
-  margin-bottom: 18px;
+      overflow:
+        hidden;
 
-  text-decoration: none;
+      white-space:
+        nowrap;
 
-  color: white;
+      text-overflow:
+        ellipsis;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(0,85,58,.65),
-      rgba(2,31,24,.85)
-    );
+      font-size:
+        15px;
 
-  border: 1px solid rgba(0,255,145,.18);
+      font-weight:
+        bold;
+    }
 
-  border-radius: 26px;
 
-  transition: .2s;
+    .account-arrow {
 
-  box-shadow: 0 12px 35px rgba(0,0,0,.25);
-}
+      color:
+        #00e889;
 
-.service:active {
-  transform: scale(.98);
-}
+      font-size:
+        14px;
+    }
 
-.service-icon {
-  width: 70px;
-  height: 70px;
 
-  flex-shrink: 0;
+    /* Account menu */
 
-  border-radius: 22px;
+    .account-menu {
 
-  display: flex;
+      position:
+        absolute;
 
-  align-items: center;
+      top:
+        58px;
 
-  justify-content: center;
+      right:
+        0;
 
-  font-size: 38px;
+      width:
+        230px;
 
-  background: rgba(0,255,145,.12);
+      padding:
+        10px;
 
-  border: 1px solid rgba(0,255,145,.18);
-}
+      border-radius:
+        18px;
 
-.service-info {
-  flex: 1;
-}
+      background:
+        linear-gradient(
+          145deg,
+          rgba(0,60,40,.98),
+          rgba(2,25,20,.98)
+        );
 
-.service-name {
-  font-size: 22px;
+      border:
+        1px solid
+        rgba(0,255,145,.2);
 
-  font-weight: bold;
+      box-shadow:
+        0 15px 40px
+        rgba(0,0,0,.4);
 
-  margin-bottom: 8px;
-}
+      display:
+        none;
 
-.service-description {
-  color: #9db1aa;
+      z-index:
+        100;
+    }
 
-  font-size: 15px;
 
-  line-height: 1.6;
-}
+    .account-menu.show {
 
-.arrow {
-  font-size: 28px;
+      display:
+        block;
+    }
 
-  color: #00e889;
-}
 
+    .account-email {
 
-/* =========================
-   Footer
-========================= */
+      padding:
+        10px;
 
-.footer {
-  text-align: center;
+      color:
+        #9db1aa;
 
-  margin-top: 45px;
+      font-size:
+        13px;
 
-  color: #62756e;
+      overflow:
+        hidden;
 
-  font-size: 13px;
-}
+      text-overflow:
+        ellipsis;
 
-</style>
+      white-space:
+        nowrap;
+
+      border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
+
+      margin-bottom:
+        8px;
+    }
+
+
+    .logout-button {
+
+      width:
+        100%;
+
+      padding:
+        12px;
+
+      border:
+        none;
+
+      border-radius:
+        12px;
+
+      background:
+        rgba(255,70,70,.12);
+
+      color:
+        #ff9b9b;
+
+      font-size:
+        15px;
+
+      font-weight:
+        bold;
+
+      cursor:
+        pointer;
+    }
+
+
+    .logout-button:active {
+
+      transform:
+        scale(.97);
+    }
+
+
+    /* =========================
+       Header
+    ========================= */
+
+    .header {
+
+      text-align:
+        center;
+
+      margin-bottom:
+        45px;
+    }
+
+
+    .header .logo {
+
+      margin-bottom:
+        18px;
+    }
+
+
+    .header h1 {
+
+      margin-bottom:
+        10px;
+    }
+
+
+    .welcome {
+
+      font-size:
+        20px;
+
+      color:
+        #a8bdb6;
+    }
+
+
+    .section-title {
+
+      font-size:
+        22px;
+
+      margin-bottom:
+        18px;
+
+      color:
+        #d9e8e3;
+    }
+
+
+    /* =========================
+       Services
+    ========================= */
+
+    .services {
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        18px;
+    }
+
+
+    .service {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        18px;
+
+      width:
+        100%;
+
+      padding:
+        22px;
+
+      text-decoration:
+        none;
+
+      color:
+        white;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(0,85,58,.65),
+          rgba(2,31,24,.85)
+        );
+
+      border:
+        1px solid
+        rgba(0,255,145,.18);
+
+      border-radius:
+        26px;
+
+      transition:
+        .2s;
+
+      box-shadow:
+        0 12px 35px
+        rgba(0,0,0,.25);
+
+      cursor:
+        pointer;
+    }
+
+
+    .service:hover {
+
+      transform:
+        translateY(-2px);
+
+      border-color:
+        rgba(0,255,145,.35);
+    }
+
+
+    .service:active {
+
+      transform:
+        scale(.98);
+    }
+
+
+    .service-icon {
+
+      width:
+        70px;
+
+      height:
+        70px;
+
+      flex-shrink:
+        0;
+
+      border-radius:
+        22px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      font-size:
+        38px;
+
+      background:
+        rgba(0,255,145,.12);
+
+      border:
+        1px solid
+        rgba(0,255,145,.18);
+    }
+
+
+    .service-info {
+
+      flex:
+        1;
+
+      min-width:
+        0;
+    }
+
+
+    .service-name {
+
+      font-size:
+        21px;
+
+      font-weight:
+        bold;
+
+      margin-bottom:
+        8px;
+    }
+
+
+    .service-description {
+
+      color:
+        #9db1aa;
+
+      font-size:
+        14px;
+
+      line-height:
+        1.6;
+    }
+
+
+    .arrow {
+
+      font-size:
+        28px;
+
+      color:
+        #00e889;
+
+      flex-shrink:
+        0;
+    }
+
+
+    /* =========================
+       Coming Soon
+    ========================= */
+
+    .coming-soon {
+
+      opacity:
+        .9;
+    }
+
+
+    .coming-soon .service-icon {
+
+      background:
+        rgba(255,255,255,.06);
+
+      border-color:
+        rgba(255,255,255,.08);
+    }
+
+
+    .badge {
+
+      display:
+        inline-block;
+
+      margin-top:
+        7px;
+
+      padding:
+        4px 9px;
+
+      border-radius:
+        20px;
+
+      background:
+        rgba(255,193,7,.10);
+
+      color:
+        #e5c76b;
+
+      font-size:
+        11px;
+    }
+
+
+    /* =========================
+       Footer
+    ========================= */
+
+    .footer {
+
+      text-align:
+        center;
+
+      margin-top:
+        45px;
+
+      color:
+        #62756e;
+
+      font-size:
+        13px;
+    }
+
+
+    /* =========================
+       Mobile
+    ========================= */
+
+    @media (max-width: 480px) {
+
+      .container {
+
+        width:
+          min(94%, 700px);
+
+        padding:
+          20px 0 35px;
+      }
+
+
+      .service {
+
+        padding:
+          18px;
+
+        gap:
+          14px;
+
+        border-radius:
+          22px;
+      }
+
+
+      .service-icon {
+
+        width:
+          60px;
+
+        height:
+          60px;
+
+        border-radius:
+          19px;
+
+        font-size:
+          31px;
+      }
+
+
+      .service-name {
+
+        font-size:
+          18px;
+      }
+
+
+      .service-description {
+
+        font-size:
+          12px;
+      }
+
+
+      .arrow {
+
+        font-size:
+          23px;
+      }
+
+
+      .header {
+
+        margin-bottom:
+          35px;
+      }
+
+
+      .header h1 {
+
+        font-size:
+          31px;
+      }
+
+
+      .welcome {
+
+        font-size:
+          16px;
+      }
+
+    }
+
+  </style>
 
 </head>
 
@@ -487,588 +905,937 @@ h1 {
 <body>
 
 
-<!-- Loading -->
+  <!-- =========================
+       Loading
+  ========================= -->
 
-<div id="loadingPage" class="loading">
+  <div
+    id="loadingPage"
+    class="loading"
+  >
 
-  <div class="loading-logo">
-    🛠️
-  </div>
-
-  <div class="spinner"></div>
-
-</div>
-
-
-<!-- Login -->
-
-<div id="loginPage" class="login-page">
-
-  <div class="login-card">
-
-    <div class="logo">
+    <div class="loading-logo">
       🛠️
     </div>
 
-    <h1>
-      Mecd Tools
-    </h1>
-
-    <p class="login-text">
-      أهلاً بك 👋<br>
-      سجّل الدخول للمتابعة إلى خدمات Mecd Tools
-    </p>
-
-    <button id="loginBtn">
-      🔵 تسجيل الدخول بواسطة Google
-    </button>
-
-    <div id="errorMessage" class="error"></div>
+    <div class="spinner"></div>
 
   </div>
 
-</div>
 
+  <!-- =========================
+       Login
+  ========================= -->
 
-<!-- Main -->
+  <div
+    id="loginPage"
+    class="login-page"
+  >
 
-<main id="mainPage" class="container">
+    <div class="login-card">
 
-
-  <!-- Account -->
-
-  <div class="account-area">
-
-    <button
-      id="accountButton"
-      class="account-button"
-    >
-
-      <img
-        id="accountPhoto"
-        class="account-photo"
-        src=""
-        alt="الحساب"
-      >
-
-      <span
-        id="accountName"
-        class="account-name"
-      >
-        الحساب
-      </span>
-
-      <span class="account-arrow">
-        ▼
-      </span>
-
-    </button>
-
-
-    <!-- Account Menu -->
-
-    <div
-      id="accountMenu"
-      class="account-menu"
-    >
-
-      <div
-        id="accountEmail"
-        class="account-email"
-      >
+      <div class="logo">
+        🛠️
       </div>
 
-      <button
-        id="logoutBtn"
-        class="logout-button"
-      >
-        تسجيل الخروج
+      <h1>
+        Mecd Tools
+      </h1>
+
+      <p class="login-text">
+        أهلاً بك 👋<br>
+        سجّل الدخول للمتابعة إلى خدمات Mecd Tools
+      </p>
+
+      <button id="loginBtn">
+        🔵 تسجيل الدخول بواسطة Google
       </button>
 
+      <div
+        id="errorMessage"
+        class="error"
+      ></div>
+
     </div>
 
   </div>
 
 
-  <!-- Header -->
+  <!-- =========================
+       Main
+  ========================= -->
 
-  <header class="header">
+  <main
+    id="mainPage"
+    class="container"
+  >
 
-    <div class="logo">
-      🛠️
+
+    <!-- Account -->
+
+    <div class="account-area">
+
+      <button
+        id="accountButton"
+        class="account-button"
+        type="button"
+      >
+
+        <img
+          id="accountPhoto"
+          class="account-photo"
+          src=""
+          alt="الحساب"
+        >
+
+        <span
+          id="accountName"
+          class="account-name"
+        >
+          الحساب
+        </span>
+
+        <span class="account-arrow">
+          ▼
+        </span>
+
+      </button>
+
+
+      <div
+        id="accountMenu"
+        class="account-menu"
+      >
+
+        <div
+          id="accountEmail"
+          class="account-email"
+        ></div>
+
+        <button
+          id="logoutBtn"
+          class="logout-button"
+          type="button"
+        >
+          تسجيل الخروج
+        </button>
+
+      </div>
+
     </div>
 
-    <h1>
-      Mecd Tools
-    </h1>
 
-    <p class="welcome">
-      أهلاً بك في أدوات Mecd
-    </p>
+    <!-- Header -->
 
-  </header>
+    <header class="header">
 
-
-  <!-- Services -->
-
-  <section>
-
-    <div class="section-title">
-      🧰 الخدمات
-    </div>
-
-
-    <!-- Camera Connect -->
-
-    <a
-      class="service"
-      href="https://mecdjhjhnh37-collab.github.io/walkie-talkie-telsiz/"
-    >
-
-      <div class="service-icon">
-        📷
+      <div class="logo">
+        🛠️
       </div>
 
-      <div class="service-info">
+      <h1>
+        Mecd Tools
+      </h1>
 
-        <div class="service-name">
-          Camera Connect
-        </div>
+      <p class="welcome">
+        أهلاً بك في أدوات Mecd
+      </p>
 
-        <div class="service-description">
-          نظام مراقبة ذكي — استخدم هاتفًا ككاميرا واتصل بجهاز المراقبة.
-        </div>
+    </header>
+
+
+    <!-- Services -->
+
+    <section>
+
+      <div class="section-title">
+        🧰 الخدمات
+      </div>
+
+
+      <div class="services">
+
+
+        <!-- Camera Connect -->
+
+        <a
+          class="service"
+          href="https://mecdjhjhnh37-collab.github.io/walkie-talkie-telsiz/"
+        >
+
+          <div class="service-icon">
+            📷
+          </div>
+
+          <div class="service-info">
+
+            <div class="service-name">
+              Camera Connect
+            </div>
+
+            <div class="service-description">
+              نظام مراقبة ذكي — استخدم هاتفًا ككاميرا واتصل بجهاز المراقبة.
+            </div>
+
+          </div>
+
+          <div class="arrow">
+            ←
+          </div>
+
+        </a>
+
+
+        <!-- Mecd Chat -->
+
+        <a
+          class="service"
+          href="https://mecdjhjhnh37-collab.github.io/MecdChat/"
+        >
+
+          <div class="service-icon">
+            💬
+          </div>
+
+          <div class="service-info">
+
+            <div class="service-name">
+              Mecd Chat
+            </div>
+
+            <div class="service-description">
+              دردشة وغرف خاصة بين المستخدمين.
+            </div>
+
+          </div>
+
+          <div class="arrow">
+            ←
+          </div>
+
+        </a>
+
+
+        <!-- Translator -->
+
+        <a
+          class="service coming-soon"
+          href="#"
+          data-service="المترجم"
+        >
+
+          <div class="service-icon">
+            🌐
+          </div>
+
+          <div class="service-info">
+
+            <div class="service-name">
+              المترجم
+            </div>
+
+            <div class="service-description">
+              ترجمة النصوص بين اللغات بسهولة وسرعة.
+            </div>
+
+            <span class="badge">
+              قريبًا
+            </span>
+
+          </div>
+
+          <div class="arrow">
+            ←
+          </div>
+
+        </a>
+
+
+        <!-- Notes -->
+
+        <a
+          class="service coming-soon"
+          href="#"
+          data-service="الملاحظات"
+        >
+
+          <div class="service-icon">
+            📝
+          </div>
+
+          <div class="service-info">
+
+            <div class="service-name">
+              الملاحظات
+            </div>
+
+            <div class="service-description">
+              اكتب واحفظ وعدّل ملاحظاتك في مكان واحد.
+            </div>
+
+            <span class="badge">
+              قريبًا
+            </span>
+
+          </div>
+
+          <div class="arrow">
+            ←
+          </div>
+
+        </a>
+
+
+        <!-- File Transfer -->
+
+        <a
+          class="service coming-soon"
+          href="#"
+          data-service="إرسال الملفات"
+        >
+
+          <div class="service-icon">
+            📤
+          </div>
+
+          <div class="service-info">
+
+            <div class="service-name">
+              إرسال الملفات
+            </div>
+
+            <div class="service-description">
+              إرسال الصور والفيديوهات والملفات بين الأجهزة.
+            </div>
+
+            <span class="badge">
+              قريبًا
+            </span>
+
+          </div>
+
+          <div class="arrow">
+            ←
+          </div>
+
+        </a>
+
+
+        <!-- Calculator -->
+
+        <a
+          class="service coming-soon"
+          href="#"
+          data-service="الحاسبة"
+        >
+
+          <div class="service-icon">
+            🧮
+          </div>
+
+          <div class="service-info">
+
+            <div class="service-name">
+              الحاسبة
+            </div>
+
+            <div class="service-description">
+              حاسبة سريعة للعمليات الحسابية اليومية.
+            </div>
+
+            <span class="badge">
+              قريبًا
+            </span>
+
+          </div>
+
+          <div class="arrow">
+            ←
+          </div>
+
+        </a>
+
+
+        <!-- Python Editor -->
+
+        <a
+          class="service coming-soon"
+          href="#"
+          data-service="محرر Python"
+        >
+
+          <div class="service-icon">
+            🐍
+          </div>
+
+          <div class="service-info">
+
+            <div class="service-name">
+              محرر Python
+            </div>
+
+            <div class="service-description">
+              اكتب أكواد Python داخل محرر مخصص.
+            </div>
+
+            <span class="badge">
+              قريبًا
+            </span>
+
+          </div>
+
+          <div class="arrow">
+            ←
+          </div>
+
+        </a>
+
 
       </div>
 
-      <div class="arrow">
-        ←
-      </div>
+    </section>
 
-    </a>
 
+    <footer class="footer">
+      Mecd Tools © 2026
+    </footer>
 
-    <!-- Mecd Chat -->
 
-    <a
-      class="service"
-      href="https://mecdjhjhnh37-collab.github.io/MecdChat/"
-    >
+  </main>
 
-      <div class="service-icon">
-        💬
-      </div>
 
-      <div class="service-info">
+  <!-- =========================
+       Firebase
+  ========================= -->
 
-        <div class="service-name">
-          Mecd Chat
-        </div>
+  <script type="module">
 
-        <div class="service-description">
-          دردشة وغرف خاصة بين المستخدمين.
-        </div>
 
-      </div>
+    import {
+      initializeApp
+    }
+    from
+      "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-      <div class="arrow">
-        ←
-      </div>
 
-    </a>
+    import {
 
-  </section>
+      getAuth,
 
+      GoogleAuthProvider,
 
-  <footer class="footer">
-    Mecd Tools © 2026
-  </footer>
+      signInWithPopup,
 
+      onAuthStateChanged,
 
-</main>
+      setPersistence,
 
+      browserLocalPersistence,
 
-<!-- Firebase -->
-
-<script type="module">
-
-
-import { initializeApp }
-
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-
-import {
-
-  getAuth,
-
-  GoogleAuthProvider,
-
-  signInWithPopup,
-
-  onAuthStateChanged,
-
-  setPersistence,
-
-  browserLocalPersistence,
-
-  signOut
-
-}
-
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-/* Firebase Config */
-
-const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyA8ZA5fcy1Tl3hZ7_5n91xVOw06syHPGyI",
-
-  authDomain:
-    "mecd-tools.firebaseapp.com",
-
-  projectId:
-    "mecd-tools",
-
-  storageBucket:
-    "mecd-tools.firebasestorage.app",
-
-  messagingSenderId:
-    "643005547408",
-
-  appId:
-    "1:643005547408:web:b1719060ec340dd0e0a915",
-
-  measurementId:
-    "G-0VKYR3TQV2"
-
-};
-
-
-/* Firebase */
-
-const app =
-  initializeApp(firebaseConfig);
-
-const auth =
-  getAuth(app);
-
-const provider =
-  new GoogleAuthProvider();
-
-
-/* Elements */
-
-const loadingPage =
-  document.getElementById("loadingPage");
-
-const loginPage =
-  document.getElementById("loginPage");
-
-const mainPage =
-  document.getElementById("mainPage");
-
-const loginBtn =
-  document.getElementById("loginBtn");
-
-const errorMessage =
-  document.getElementById("errorMessage");
-
-const accountButton =
-  document.getElementById("accountButton");
-
-const accountMenu =
-  document.getElementById("accountMenu");
-
-const accountPhoto =
-  document.getElementById("accountPhoto");
-
-const accountName =
-  document.getElementById("accountName");
-
-const accountEmail =
-  document.getElementById("accountEmail");
-
-const logoutBtn =
-  document.getElementById("logoutBtn");
-
-
-/* Persistence */
-
-await setPersistence(
-  auth,
-  browserLocalPersistence
-);
-
-
-/* Save user */
-
-function saveUser(user) {
-
-  localStorage.setItem(
-    "mecdUser",
-
-    JSON.stringify({
-
-      name:
-        user.displayName || "مستخدم",
-
-      photo:
-        user.photoURL || "",
-
-      email:
-        user.email || ""
-
-    })
-
-  );
-
-}
-
-
-/* Show account */
-
-function showAccount(user) {
-
-  accountName.textContent =
-    user.displayName || "مستخدم";
-
-  accountEmail.textContent =
-    user.email || "";
-
-  accountPhoto.src =
-    user.photoURL ||
-    "https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg";
-
-}
-
-
-/* Authentication */
-
-onAuthStateChanged(
-  auth,
-  (user) => {
-
-    loadingPage.style.display =
-      "none";
-
-
-    if (user) {
-
-      /* حفظ الحساب */
-
-      saveUser(user);
-
-
-      /* عرض الحساب */
-
-      showAccount(user);
-
-
-      /* إظهار الصفحة */
-
-      loginPage.style.display =
-        "none";
-
-      mainPage.style.display =
-        "block";
+      signOut
 
     }
+    from
+      "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    else {
 
-      /* حذف الحساب المحفوظ */
+    /* =========================
+       Firebase Config
+    ========================= */
 
-      localStorage.removeItem(
-        "mecdUser"
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyA8ZA5fcy1Tl3hZ7_5n91xVOw06syHPGyI",
+
+      authDomain:
+        "mecd-tools.firebaseapp.com",
+
+      projectId:
+        "mecd-tools",
+
+      storageBucket:
+        "mecd-tools.firebasestorage.app",
+
+      messagingSenderId:
+        "643005547408",
+
+      appId:
+        "1:643005547408:web:b1719060ec340dd0e0a915",
+
+      measurementId:
+        "G-0VKYR3TQV2"
+
+    };
+
+
+    /* =========================
+       Initialize Firebase
+    ========================= */
+
+    const app =
+      initializeApp(
+        firebaseConfig
       );
 
 
-      /* إظهار تسجيل الدخول */
-
-      mainPage.style.display =
-        "none";
-
-      loginPage.style.display =
-        "flex";
-
-    }
-
-  }
-);
+    const auth =
+      getAuth(app);
 
 
-/* Google Login */
-
-loginBtn.addEventListener(
-  "click",
-
-  async () => {
-
-    loginBtn.disabled =
-      true;
-
-    loginBtn.textContent =
-      "جاري تسجيل الدخول...";
-
-    errorMessage.style.display =
-      "none";
+    const provider =
+      new GoogleAuthProvider();
 
 
-    try {
+    /* =========================
+       Elements
+    ========================= */
 
-      const result =
-        await signInWithPopup(
-          auth,
-          provider
+    const loadingPage =
+      document.getElementById(
+        "loadingPage"
+      );
+
+
+    const loginPage =
+      document.getElementById(
+        "loginPage"
+      );
+
+
+    const mainPage =
+      document.getElementById(
+        "mainPage"
+      );
+
+
+    const loginBtn =
+      document.getElementById(
+        "loginBtn"
+      );
+
+
+    const errorMessage =
+      document.getElementById(
+        "errorMessage"
+      );
+
+
+    const accountButton =
+      document.getElementById(
+        "accountButton"
+      );
+
+
+    const accountMenu =
+      document.getElementById(
+        "accountMenu"
+      );
+
+
+    const accountPhoto =
+      document.getElementById(
+        "accountPhoto"
+      );
+
+
+    const accountName =
+      document.getElementById(
+        "accountName"
+      );
+
+
+    const accountEmail =
+      document.getElementById(
+        "accountEmail"
+      );
+
+
+    const logoutBtn =
+      document.getElementById(
+        "logoutBtn"
+      );
+
+
+    /* =========================
+       Persistence
+    ========================= */
+
+    setPersistence(
+      auth,
+      browserLocalPersistence
+    )
+    .catch(
+      error => {
+        console.error(
+          "Persistence error:",
+          error
         );
-
-
-      /* حفظ بيانات الحساب */
-
-      saveUser(result.user);
-
-
-    }
-
-    catch (error) {
-
-      console.error(error);
-
-      errorMessage.textContent =
-        "حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى.";
-
-      errorMessage.style.display =
-        "block";
-
-      loginBtn.disabled =
-        false;
-
-      loginBtn.textContent =
-        "🔵 تسجيل الدخول بواسطة Google";
-
-    }
-
-  }
-);
-
-
-/* Account menu */
-
-accountButton.addEventListener(
-  "click",
-
-  (event) => {
-
-    event.stopPropagation();
-
-    accountMenu.classList.toggle(
-      "show"
+      }
     );
 
-  }
-);
 
+    /* =========================
+       Save User
+    ========================= */
 
-/* Close menu */
+    function saveUser(user) {
 
-document.addEventListener(
-  "click",
+      localStorage.setItem(
 
-  () => {
+        "mecdUser",
 
-    accountMenu.classList.remove(
-      "show"
-    );
+        JSON.stringify({
 
-  }
-);
+          name:
+            user.displayName ||
+            "مستخدم",
 
+          photo:
+            user.photoURL ||
+            "",
 
-/* Logout */
-
-logoutBtn.addEventListener(
-  "click",
-
-  async (event) => {
-
-    event.stopPropagation();
-
-
-    try {
-
-      await signOut(auth);
-
-
-      localStorage.removeItem(
-        "mecdUser"
-      );
-
-
-      accountMenu.classList.remove(
-        "show"
-      );
-
-    }
-
-    catch (error) {
-
-      console.error(error);
-
-      alert(
-        "حدث خطأ أثناء تسجيل الخروج."
-      );
-
-    }
-
-  }
-);
-
-
-</script>
-
-
-<!-- Service Worker -->
-
-<script>
-
-if ("serviceWorker" in navigator) {
-
-  window.addEventListener(
-    "load",
-
-    () => {
-
-      navigator.serviceWorker
-        .register("./sw.js")
-
-        .then(() => {
-
-          console.log(
-            "Mecd Tools: Service Worker registered"
-          );
+          email:
+            user.email ||
+            ""
 
         })
 
-        .catch(
-          error => {
-
-            console.error(
-              "Service Worker error:",
-              error
-            );
-
-          }
-        );
+      );
 
     }
-  );
 
-}
 
-</script>
+    /* =========================
+       Show Account
+    ========================= */
+
+    function showAccount(user) {
+
+      accountName.textContent =
+        user.displayName ||
+        "مستخدم";
+
+
+      accountEmail.textContent =
+        user.email ||
+        "";
+
+
+      accountPhoto.src =
+        user.photoURL ||
+        "https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg";
+
+    }
+
+
+    /* =========================
+       Authentication
+    ========================= */
+
+    onAuthStateChanged(
+
+      auth,
+
+      (user) => {
+
+        loadingPage.style.display =
+          "none";
+
+
+        if (user) {
+
+          saveUser(user);
+
+          showAccount(user);
+
+
+          loginPage.style.display =
+            "none";
+
+
+          mainPage.style.display =
+            "block";
+
+        }
+
+        else {
+
+          localStorage.removeItem(
+            "mecdUser"
+          );
+
+
+          mainPage.style.display =
+            "none";
+
+
+          loginPage.style.display =
+            "flex";
+
+        }
+
+      }
+
+    );
+
+
+    /* =========================
+       Google Login
+    ========================= */
+
+    loginBtn.addEventListener(
+
+      "click",
+
+      async () => {
+
+        loginBtn.disabled =
+          true;
+
+
+        loginBtn.textContent =
+          "جاري تسجيل الدخول...";
+
+
+        errorMessage.style.display =
+          "none";
+
+
+        try {
+
+          const result =
+            await signInWithPopup(
+              auth,
+              provider
+            );
+
+
+          saveUser(
+            result.user
+          );
+
+        }
+
+        catch (error) {
+
+          console.error(
+            "Login error:",
+            error
+          );
+
+
+          errorMessage.textContent =
+            "حدث خطأ أثناء تسجيل الدخول. تأكد من اتصال الإنترنت وحاول مرة أخرى.";
+
+
+          errorMessage.style.display =
+            "block";
+
+
+          loginBtn.disabled =
+            false;
+
+
+          loginBtn.textContent =
+            "🔵 تسجيل الدخول بواسطة Google";
+
+        }
+
+      }
+
+    );
+
+
+    /* =========================
+       Account Menu
+    ========================= */
+
+    accountButton.addEventListener(
+
+      "click",
+
+      (event) => {
+
+        event.stopPropagation();
+
+
+        accountMenu.classList.toggle(
+          "show"
+        );
+
+      }
+
+    );
+
+
+    document.addEventListener(
+
+      "click",
+
+      () => {
+
+        accountMenu.classList.remove(
+          "show"
+        );
+
+      }
+
+    );
+
+
+    accountMenu.addEventListener(
+
+      "click",
+
+      (event) => {
+
+        event.stopPropagation();
+
+      }
+
+    );
+
+
+    /* =========================
+       Logout
+    ========================= */
+
+    logoutBtn.addEventListener(
+
+      "click",
+
+      async () => {
+
+        try {
+
+          await signOut(auth);
+
+
+          localStorage.removeItem(
+            "mecdUser"
+          );
+
+
+          accountMenu.classList.remove(
+            "show"
+          );
+
+        }
+
+        catch (error) {
+
+          console.error(
+            "Logout error:",
+            error
+          );
+
+
+          alert(
+            "حدث خطأ أثناء تسجيل الخروج."
+          );
+
+        }
+
+      }
+
+    );
+
+
+    /* =========================
+       Coming Soon Services
+    ========================= */
+
+    document
+      .querySelectorAll(
+        ".coming-soon"
+      )
+      .forEach(
+
+        service => {
+
+          service.addEventListener(
+
+            "click",
+
+            (event) => {
+
+              event.preventDefault();
+
+
+              const name =
+                service.dataset.service ||
+                "هذه الخدمة";
+
+
+              alert(
+                `🛠️ ${name}\n\nالخدمة قيد التطوير وستتوفر قريبًا.`
+              );
+
+            }
+
+          );
+
+        }
+
+      );
+
+
+  </script>
+
+
+  <!-- =========================
+       Service Worker
+  ========================= -->
+
+  <script>
+
+    if (
+      "serviceWorker" in navigator
+    ) {
+
+      window.addEventListener(
+
+        "load",
+
+        () => {
+
+          navigator.serviceWorker
+            .register(
+              "./sw.js"
+            )
+
+            .then(
+              registration => {
+
+                console.log(
+                  "Mecd Tools Service Worker:",
+                  registration.scope
+                );
+
+              }
+
+            )
+
+            .catch(
+              error => {
+
+                console.error(
+                  "Service Worker error:",
+                  error
+                );
+
+              }
+
+            );
+
+        }
+
+      );
+
+    }
+
+  </script>
 
 
 </body>
