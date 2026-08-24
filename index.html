@@ -1278,7 +1278,19 @@ if ("serviceWorker" in navigator) {
 
 </script>
 
-
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => {
+        console.log("Mecd Tools Service Worker registered");
+      })
+      .catch(error => {
+        console.error("Service Worker error:", error);
+      });
+  });
+}
+</script>
 </body>
 
 </html>
