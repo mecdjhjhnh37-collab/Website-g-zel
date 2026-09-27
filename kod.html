@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+  <title>Screen Connect</title>
+
+  <!-- PeerJS -->
+  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+
+  <!-- QR Code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, #0c241c 0%, #050807 45%, #020504 100%);
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 650px;
+      min-height: 100vh;
+      margin: auto;
+      padding: 18px;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 27px;
+    }
+
+    header p {
+      color: #8ba59b;
+      margin-top: 8px;
+    }
+
+    .card {
+      background: rgba(7, 17, 15, .95);
+      border: 1px solid rgba(0, 232, 137, .15);
+      border-radius: 22px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 15px 40px rgba(0,0,0,.3);
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 16px;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: bold;
+      color: #00150d;
+      background: #00e889;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:active {
+      transform: scale(.98);
+    }
+
+    button.secondary {
+      color: white;
+      background: #10251f;
+      border: 1px solid #1c493b;
+    }
+
+    button.danger {
+      background: #ff4d67;
+      color: white;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .status {
+      text-align: center;
+      background: #07110f;
+      border-radius: 14px;
+      padding: 13px;
+      color: #00e889;
+      margin-bottom: 15px;
+    }
+
+    .code {
+      text-align: center;
+      font-size: 25px;
+      letter-spacing: 4px;
+      font-weight: bold;
+      color: #00e889;
+      direction: ltr;
+      margin: 12px 0;
+      word-break: break-all;
+    }
+
+    #qrcode {
+      width: 220px;
+      height: 220px;
+      padding: 10px;
+      background: white;
+      border-radius: 15px;
+      margin: 18px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #qrcode img,
+    #qrcode canvas {
+      max-width: 200px;
+      max-height: 200px;
+    }
+
+    .videoBox {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+    }
+
+    .videoLabel {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      background: rgba(0,0,0,.65);
+      padding: 7px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      direction: rtl;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      border-radius: 14px;
+      border: 1px solid #21483b;
+      background: #020806;
+      color: white;
+      outline: none;
+      font-size: 17px;
+      text-align: center;
+      direction: ltr;
+      margin-top: 10px;
+    }
+
+    .info {
+      color: #91aaa1;
+      font-size: 14px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .connected {
+      color: #00e889;
+    }
+
+    .error {
+      color: #ff7185;
+    }
+
+    .roleButtons {
+      display: grid;
+      gap: 12px;
+    }
+
+    .small {
+      font-size: 13px;
+      color: #718a82;
+      text-align: center;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+    <h1>📱 Screen Connect</h1>
+    <p>بث شاشة هاتف إلى هاتف آخر</p>
+  </header>
+
+  <!-- اختيار الوضع -->
+  <section id="home" class="card">
+
+    <div class="roleButtons">
+
+      <button onclick="startHost()">
+        📡 بث شاشتي
+      </button>
+
+      <button class="secondary" onclick="showViewer()">
+        👁️ مشاهدة شاشة
+      </button>
+
+    </div>
+
+    <p class="info">
+      الهاتف الذي سيبث الشاشة يختار «بث شاشتي».
+      الهاتف الآخر يختار «مشاهدة شاشة».
+    </p>
+
+  </section>
+
+
+  <!-- HOST -->
+  <section id="host" class="hidden">
+
+    <div class="card">
+
+      <div id="hostStatus" class="status">
+        جاري إنشاء الاتصال...
+      </div>
+
+      <h3 style="text-align:center">
+        امسح هذا الـ QR من الهاتف الآخر
+      </h3>
+
+      <div id="qrcode"></div>
+
+      <div class="small">
+        أو استخدم الكود:
+      </div>
+
+      <div id="hostCode" class="code">
+        ...
+      </div>
+
+      <button id="startShareBtn" onclick="startScreenShare()" disabled>
+        🖥️ ابدأ بث الشاشة
+      </button>
+
+      <button class="danger" onclick="disconnectAll()">
+        إيقاف الاتصال
+      </button>
+
+    </div>
+
+    <div id="hostPreviewCard" class="card hidden">
+
+      <div class="videoBox">
+        <video id="localVideo"
+               autoplay
+               muted
+               playsinline></video>
+
+        <div class="videoLabel">
+          معاينة الشاشة
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- VIEWER -->
+  <section id="viewer" class="hidden">
+
+    <div class="card">
+
+      <div id="viewerStatus" class="status">
+        أدخل كود البث
+      </div>
+
+      <input
+        id="roomInput"
+        placeholder="مثال: abc123"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+      >
+
+      <button onclick="connectViewer()">
+        🔗 اتصال
+      </button>
+
+      <button class="secondary" onclick="scanFromURL()">
+        📷 استخدام QR
+      </button>
+
+    </div>
+
+
+    <div id="remoteCard" class="card hidden">
+
+      <div class="videoBox">
+
+        <video id="remoteVideo"
+               autoplay
+               playsinline
+               controls></video>
+
+        <div class="videoLabel">
+          📺 الشاشة المبثوثة
+        </div>
+
+      </div>
+
+      <button class="danger" onclick="disconnectViewer()">
+        قطع الاتصال
+      </button>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+<script>
+
+  // ============================
+  // Variables
+  // ============================
+
+  let peer = null;
+
+  let hostPeer = null;
+
+  let viewerConnection = null;
+
+  let viewerPeer = null;
+
+  let screenStream = null;
+
+  let currentCall = null;
+
+  let connectedViewer = null;
+
+
+  // ============================
+  // Elements
+  // ============================
+
+  const home = document.getElementById("home");
+
+  const host = document.getElementById("host");
+
+  const viewer = document.getElementById("viewer");
+
+  const hostStatus = document.getElementById("hostStatus");
+
+  const viewerStatus = document.getElementById("viewerStatus");
+
+  const hostCode = document.getElementById("hostCode");
+
+  const startShareBtn = document.getElementById("startShareBtn");
+
+  const localVideo = document.getElementById("localVideo");
+
+  const remoteVideo = document.getElementById("remoteVideo");
+
+  const hostPreviewCard =
+    document.getElementById("hostPreviewCard");
+
+  const remoteCard =
+    document.getElementById("remoteCard");
+
+
+  // ============================
+  // Generate random code
+  // ============================
+
+  function randomCode(length = 6) {
+
+    const chars =
+      "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+    let result = "";
+
+    for (let i = 0; i < length; i++) {
+
+      result += chars[
+        Math.floor(Math.random() * chars.length)
+      ];
+
+    }
+
+    return result;
+  }
+
+
+  // ============================
+  // Show Host
+  // ============================
+
+  function startHost() {
+
+    home.classList.add("hidden");
+
+    host.classList.remove("hidden");
+
+    createHost();
+
+  }
+
+
+  // ============================
+  // Create Host
+  // ============================
+
+  function createHost() {
+
+    hostStatus.textContent =
+      "جاري إنشاء جلسة البث...";
+
+    /*
+      PeerJS يعطي الجهاز ID خاص.
+
+      نستخدم ID عشوائي حتى يكون من السهل
+      مشاركته داخل QR.
+    */
+
+    const id = "screen-" + randomCode(8);
+
+    peer = new Peer(id, {
+
+      debug: 1
+
+    });
+
+
+    peer.on("open", function(id) {
+
+      hostPeer = id;
+
+      hostCode.textContent = id;
+
+      hostStatus.textContent =
+        "🟢 الجلسة جاهزة — امسح QR من الهاتف الآخر";
+
+      startShareBtn.disabled = false;
+
+      createQR(id);
+
+    });
+
+
+    /*
+      عندما يدخل الهاتف الثاني
+    */
+
+    peer.on("connection", function(connection) {
+
+      viewerConnection = connection;
+
+      connectedViewer = connection.peer;
+
+      hostStatus.textContent =
+        "🟢 الهاتف الآخر متصل";
+
+      connection.on("open", function() {
+
+        connection.send({
+
+          type: "host-ready"
+
+        });
+
+      });
+
+      connection.on("data", function(data) {
+
+        if (!data) return;
+
+        if (data.type === "viewer-ready") {
+
+          hostStatus.textContent =
+            "🟢 الهاتف جاهز للمشاهدة";
+
+        }
+
+      });
+
+    });
+
+
+    peer.on("error", function(error) {
+
+      console.error(error);
+
+      hostStatus.textContent =
+        "❌ حدث خطأ في الاتصال: " + error.type;
+
+    });
+
+  }
+
+
+  // ============================
+  // QR
+  // ============================
+
+  function createQR(id) {
+
+    const box = document.getElementById("qrcode");
+
+    box.innerHTML = "";
+
+    const joinURL =
+      location.origin +
+      location.pathname +
+      "?join=" +
+      encodeURIComponent(id);
+
+    new QRCode(box, {
+
+      text: joinURL,
+
+      width: 200,
+
+      height: 200,
+
+      correctLevel: QRCode.CorrectLevel.M
+
+    });
+
+  }
+
+
+  // ============================
+  // Start screen share
+  // ============================
+
+  async function startScreenShare() {
+
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getDisplayMedia) {
+
+      hostStatus.textContent =
+        "❌ هذا المتصفح لا يدعم مشاركة الشاشة.";
+
+      return;
+
+    }
+
+
+    if (!connectedViewer) {
+
+      hostStatus.textContent =
+        "⚠️ يجب أن يتصل الهاتف الآخر أولاً.";
+
+      return;
+
+    }
+
+
+    try {
+
+      hostStatus.textContent =
+        "اختر الشاشة التي تريد بثها...";
+
+
+      /*
+        يجب استدعاء getDisplayMedia
+        بعد ضغط المستخدم على الزر.
+      */
+
+      screenStream =
+        await navigator.mediaDevices.getDisplayMedia({
+
+          video: {
+
+            frameRate: {
+
+              ideal: 30,
+
+              max: 60
+
+            }
+
+          },
+
+          audio: true
+
+        });
+
+
+      localVideo.srcObject =
+        screenStream;
+
+      hostPreviewCard.classList.remove("hidden");
+
+
+      /*
+        بث الشاشة للهاتف الآخر
+      */
+
+      currentCall = peer.call(
+
+        connectedViewer,
+
+        screenStream,
+
+        {
+
+          metadata: {
+
+            type: "screen-share"
+
+          }
+
+        }
+
+      );
+
+
+      if (!currentCall) {
+
+        hostStatus.textContent =
+          "❌ تعذر إنشاء بث WebRTC.";
+
+        return;
+
+      }
+
+
+      hostStatus.textContent =
+        "🟢 يتم بث الشاشة الآن";
+
+
+      /*
+        إذا أوقف المستخدم المشاركة
+        من شريط النظام
+      */
+
+      const videoTrack =
+        screenStream.getVideoTracks()[0];
+
+
+      if (videoTrack) {
+
+        videoTrack.onended = function() {
+
+          stopScreenShare();
+
+        };
+
+      }
+
+
+      currentCall.on("close", function() {
+
+        stopScreenShare();
+
+      });
+
+
+      currentCall.on("error", function(error) {
+
+        console.error(error);
+
+        hostStatus.textContent =
+          "❌ انقطع بث الشاشة.";
+
+      });
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      if (error.name === "NotAllowedError") {
+
+        hostStatus.textContent =
+          "⚠️ تم إلغاء مشاركة الشاشة.";
+
+      } else {
+
+        hostStatus.textContent =
+          "❌ فشل بدء مشاركة الشاشة.";
+
+      }
+
+    }
+
+  }
+
+
+  // ============================
+  // Stop screen
+  // ============================
+
+  function stopScreenShare() {
+
+    if (screenStream) {
+
+      screenStream.getTracks().forEach(track => {
+
+        track.stop();
+
+      });
+
+      screenStream = null;
+
+    }
+
+
+    if (localVideo) {
+
+      localVideo.srcObject = null;
+
+    }
+
+
+    if (currentCall) {
+
+      try {
+
+        currentCall.close();
+
+      } catch {}
+
+      currentCall = null;
+
+    }
+
+
+    hostStatus.textContent =
+      "تم إيقاف بث الشاشة.";
+
+  }
+
+
+  // ============================
+  // Viewer page
+  // ============================
+
+  function showViewer() {
+
+    home.classList.add("hidden");
+
+    viewer.classList.remove("hidden");
+
+  }
+
+
+  // ============================
+  // Viewer connect
+  // ============================
+
+  function connectViewer() {
+
+    const code =
+      document.getElementById("roomInput")
+        .value
+        .trim();
+
+
+    if (!code) {
+
+      viewerStatus.textContent =
+        "⚠️ أدخل كود البث.";
+
+      return;
+
+    }
+
+
+    connectToHost(code);
+
+  }
+
+
+  // ============================
+  // Connect Viewer
+  // ============================
+
+  function connectToHost(hostId) {
+
+    viewerStatus.textContent =
+      "جاري الاتصال...";
+
+
+    /*
+      إنشاء Peer جديد للهاتف المشاهد
+    */
+
+    const viewerId =
+      "viewer-" + randomCode(8);
+
+
+    viewerPeer =
+      new Peer(viewerId);
+
+
+    viewerPeer.on("open", function(id) {
+
+      /*
+        اتصال DataChannel مع الهاتف المضيف
+      */
+
+      const connection =
+        viewerPeer.connect(hostId);
+
+
+      viewerConnection = connection;
+
+
+      connection.on("open", function() {
+
+        connection.send({
+
+          type: "viewer-ready"
+
+        });
+
+
+        viewerStatus.textContent =
+          "🟢 تم الاتصال بالمضيف — انتظر البث...";
+
+      });
+
+
+      connection.on("data", function(data) {
+
+        if (!data) return;
+
+        if (data.type === "host-ready") {
+
+          viewerStatus.textContent =
+            "🟢 المضيف جاهز.";
+
+        }
+
+      });
+
+
+      connection.on("close", function() {
+
+        viewerStatus.textContent =
+          "🔴 تم قطع الاتصال.";
+
+      });
+
+
+      connection.on("error", function(error) {
+
+        console.error(error);
+
+        viewerStatus.textContent =
+          "❌ فشل الاتصال.";
+
+      });
+
+    });
+
+
+    /*
+      استقبال بث الشاشة
+    */
+
+    viewerPeer.on("call", function(call) {
+
+      currentCall = call;
+
+
+      /*
+        لا نرسل كاميرا أو مايك.
+        نجيب stream فارغ فقط حتى نقدر نقبل المكالمة.
+      */
+
+      call.answer();
+
+
+      call.on("stream", function(stream) {
+
+        remoteVideo.srcObject =
+          stream;
+
+        remoteCard.classList.remove("hidden");
+
+        viewerStatus.textContent =
+          "🟢 يتم عرض الشاشة الآن";
+
+        remoteVideo.play().catch(() => {});
+
+      });
+
+
+      call.on("close", function() {
+
+        remoteVideo.srcObject = null;
+
+        remoteCard.classList.add("hidden");
+
+        viewerStatus.textContent =
+          "🔴 انتهى بث الشاشة.";
+
+      });
+
+
+      call.on("error", function(error) {
+
+        console.error(error);
+
+        viewerStatus.textContent =
+          "❌ حدث خطأ في بث الشاشة.";
+
+      });
+
+    });
+
+
+    viewerPeer.on("error", function(error) {
+
+      console.error(error);
+
+      viewerStatus.textContent =
+        "❌ تعذر الاتصال بالمضيف: " +
+        error.type;
+
+    });
+
+  }
+
+
+  // ============================
+  // Read QR URL
+  // ============================
+
+  function scanFromURL() {
+
+    const params =
+      new URLSearchParams(location.search);
+
+    const join =
+      params.get("join");
+
+
+    if (!join) {
+
+      viewerStatus.textContent =
+        "لا يوجد QR في هذا الرابط.";
+
+      return;
+
+    }
+
+
+    document.getElementById("roomInput")
+      .value = join;
+
+
+    connectToHost(join);
+
+  }
+
+
+  // ============================
+  // Disconnect viewer
+  // ============================
+
+  function disconnectViewer() {
+
+    if (currentCall) {
+
+      try {
+
+        currentCall.close();
+
+      } catch {}
+
+      currentCall = null;
+
+    }
+
+
+    if (viewerConnection) {
+
+      try {
+
+        viewerConnection.close();
+
+      } catch {}
+
+      viewerConnection = null;
+
+    }
+
+
+    if (viewerPeer) {
+
+      try {
+
+        viewerPeer.destroy();
+
+      } catch {}
+
+      viewerPeer = null;
+
+    }
+
+
+    remoteVideo.srcObject = null;
+
+    remoteCard.classList.add("hidden");
+
+    viewerStatus.textContent =
+      "تم قطع الاتصال.";
+
+  }
+
+
+  // ============================
+  // Disconnect everything
+  // ============================
+
+  function disconnectAll() {
+
+    stopScreenShare();
+
+
+    if (viewerConnection) {
+
+      try {
+
+        viewerConnection.close();
+
+      } catch {}
+
+      viewerConnection = null;
+
+    }
+
+
+    if (peer) {
+
+      try {
+
+        peer.destroy();
+
+      } catch {}
+
+      peer = null;
+
+    }
+
+
+    hostStatus.textContent =
+      "تم إيقاف الجلسة.";
+
+    startShareBtn.disabled = true;
+
+  }
+
+
+  // ============================
+  // Automatic QR joining
+  // ============================
+
+  window.addEventListener("load", function() {
+
+    const params =
+      new URLSearchParams(location.search);
+
+    const join =
+      params.get("join");
+
+
+    if (join) {
+
+      home.classList.add("hidden");
+
+      viewer.classList.remove("hidden");
+
+      document.getElementById("roomInput")
+        .value = join;
+
+
+      /*
+        تأخير بسيط حتى تحميل PeerJS
+      */
+
+      setTimeout(() => {
+
+        connectToHost(join);
+
+      }, 500);
+
+    }
+
+  });
+
+</script>
+
+</body>
+</html>
